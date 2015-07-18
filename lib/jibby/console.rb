@@ -2,34 +2,39 @@ require 'base64'
 module Jibby
   # This class provides the command loop for Jibby
   class Console
-    def initialize(jira_host)
-      @authentication = ''
-      @host = jira_host
+    attr_reader :gateway
+
+    def initialize(gateway)
+      @gateway = gateway
     end
 
     def start
-      setup_credentials
-      loop do
-        display_prompt
-        break unless parse($stdin.gets.chomp)
-      end
+      return false unless gateway.credentials(self)
+      loop { break unless parse(prompt(prompt_text)) }
+    end
+
+    def clear_screen
+      Gem.win_platform? ? (system 'cls') : (system 'clear')
+    end
+
+    def prompt(label)
+      display_label(label)
+      $stdin.gets.chomp
+    end
+
+    def silent_prompt(label)
+      display_label(label)
+      $stdin.noecho(&:gets).chomp
     end
 
     private
 
-    def setup_credentials
-      puts "Login to #{@host}"
-      'Username: '.display
-      username = $stdin.gets.chomp
-      'Password: '.display
-      password = $stdin.noecho(&:gets).chomp
-
-      @authentication = Base64.strict_encode64("#{username}:#{password}")
-      Gem.win_platform? ? (system 'cls') : (system 'clear')
+    def prompt_text
+      '>'
     end
 
-    def display_prompt
-      '> '.display
+    def display_label(label)
+      "#{label} ".display
     end
 
     def parse(input)

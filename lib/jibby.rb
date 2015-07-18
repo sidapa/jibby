@@ -4,7 +4,13 @@ Dir["#{File.dirname(__FILE__)}/jibby/**/*.rb"].each { |file| require file }
 module Jibby
   module_function
 
-  def start(jira_host)
-    Console.new(jira_host).start
+  def start(host)
+    Console.new(gateway(host)).start
   end
+
+  def gateway(host)
+    JiraGateway.new(host)
+  end
+
+  private_class_method :gateway
 end
