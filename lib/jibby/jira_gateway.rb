@@ -14,7 +14,6 @@ module Jibby
       password = console.silent_prompt 'Password:'
 
       @authentication = Base64.strict_encode64("#{username}:#{password}")
-      console.clear_screen
     end
   end
 end
