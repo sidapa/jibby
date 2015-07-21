@@ -5,12 +5,8 @@ module Jibby
   module_function
 
   def start(host)
-    Console.new(gateway(host)).start
+    gateway = JiraGateway.new(host)
+    console = Console.new
+    Application.new(gateway: gateway, console: console).start
   end
-
-  def gateway(host)
-    JiraGateway.new(host)
-  end
-
-  private_class_method :gateway
 end
