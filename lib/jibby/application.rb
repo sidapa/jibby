@@ -7,11 +7,16 @@ module Jibby
     def initialize(gateway:, console:)
       @gateway = gateway
       @console = console
+
+      @current_key = nil
+      @current_ticket = nil
     end
 
     def start
       return false unless gateway.credentials(console)
+      console.clear_screen
       loop { break unless parse(console.prompt(prompt_text)) }
+      true
     end
 
     private
