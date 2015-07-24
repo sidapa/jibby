@@ -37,4 +37,14 @@ describe Jibby::Application do
       end
     end
   end
+
+  describe '#load_ticket' do
+    subject(:load_method) { new_application.load_ticket }
+    let(:load_result) { double }
+
+    it 'calls load_ticket on the gateway and forwards the return value' do
+      expect(gateway).to receive(:load_ticket).and_return(load_result)
+      expect(load_method).to eql(load_result)
+    end
+  end
 end

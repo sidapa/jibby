@@ -3,6 +3,7 @@ module Jibby
   # This class provides the command loop for Jibby
   class Application
     attr_reader :gateway, :console
+    attr_accessor :current_key, :current_ticket
 
     def initialize(gateway:, console:)
       @gateway = gateway
@@ -15,25 +16,18 @@ module Jibby
     def start
       return false unless gateway.credentials(console)
       console.clear_screen
-      loop { break unless parse(console.prompt(prompt_text)) }
+      loop { break unless Jibby::CommandParser.parse(input: console.prompt(prompt_text), application: self) }
       true
+    end
+
+    def load_ticket(*params)
+      @gateway.load_ticket(*params)
     end
 
     private
 
     def prompt_text
       '>'
-    end
-
-    def parse(input)
-      command, *params = input.split(' ')
-      return false if command == 'exit'
-      case command
-      when 'load'
-      else
-        puts [command, params].join(' ')
-      end
-      true
     end
   end
 end
