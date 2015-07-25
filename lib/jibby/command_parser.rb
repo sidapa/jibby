@@ -1,4 +1,5 @@
 module Jibby
+  # Provides the infrastructure for adding and calling commands
   class CommandParser
     @commands = {}
 

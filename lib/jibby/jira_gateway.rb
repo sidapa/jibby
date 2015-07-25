@@ -5,7 +5,7 @@ require 'json'
 module Jibby
   # This class provides Jibby access to a JIRA host
   class JiraGateway
-    API_PATH = "/rest/api/2"
+    API_PATH = '/rest/api/2'
 
     def initialize(host)
       @host = URI.parse(host)

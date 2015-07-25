@@ -1,4 +1,5 @@
 module Jibby
+  # Contains information about a Jira Ticket
   class Ticket
     attr_reader :issue_type, :project, :assignee
     attr_reader :status, :description, :summary, :reporter

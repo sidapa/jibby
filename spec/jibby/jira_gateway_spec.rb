@@ -35,7 +35,6 @@ describe Jibby::JiraGateway do
   end
 
   describe '#fetch_ticket' do
-
     subject(:fetch_ticket_method) { new_gateway.fetch_ticket(key) }
     let(:http_double) { OpenStruct.new }
     let(:key) { 'FOO1' }
@@ -56,7 +55,7 @@ describe Jibby::JiraGateway do
     context 'error fetching' do
       let(:code) { 404 }
 
-      it {is_expected.to eql(nil) }
+      it { is_expected.to eql(nil) }
     end
   end
 end

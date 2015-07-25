@@ -16,7 +16,15 @@ module Jibby
     def start
       return false unless gateway.credentials(console)
       console.clear_screen
-      loop { break unless Jibby::CommandParser.parse(input: console.prompt(prompt_text), application: self) }
+      loop do
+        parse_params = {
+          input: console.prompt(prompt_text),
+          application: self
+        }
+
+        break unless Jibby::CommandParser.parse(parse_params)
+      end
+
       true
     end
 

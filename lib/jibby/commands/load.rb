@@ -1,5 +1,6 @@
 module Jibby
   module Commands
+    # The Load class provides the load command
     class Load
       def self.run(application, *params)
         key = params.first
@@ -16,8 +17,7 @@ module Jibby
         true
       end
 
-      Jibby::CommandParser.add_command([:load, :open, :l, :o], self.method(:run))
+      Jibby::CommandParser.add_command([:load, :open, :l, :o], method(:run))
     end
   end
 end
-

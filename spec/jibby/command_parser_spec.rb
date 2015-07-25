@@ -10,7 +10,6 @@ describe Jibby::CommandParser do
     Jibby::CommandParser.instance_variable_set(:@commands, {})
   end
   describe '::add_command' do
-
     subject(:add_command_method) { parser.add_command(name, method) }
 
     it 'adds to the @commands hash' do
@@ -47,7 +46,9 @@ describe Jibby::CommandParser do
   end
 
   describe '::parse' do
-    subject(:parse_method) { parser.parse(application: application_double, input: input) }
+    subject(:parse_method) do
+      parser.parse(application: application_double, input: input)
+    end
 
     before(:each) do
       allow(method).to receive(:class).and_return(Method)
@@ -57,7 +58,7 @@ describe Jibby::CommandParser do
     let(:method) { double }
     let(:application_double) { double(console: Jibby::Console.new) }
     let(:input) { "#{call_name} #{param}" }
-    let(:param) { "opt" }
+    let(:param) { 'opt' }
     let(:call_name) { :foo }
 
     it 'calls the method depending on the key' do
