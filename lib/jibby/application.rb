@@ -27,7 +27,7 @@ module Jibby
     private
 
     def prompt_text
-      '>'
+      "#{@current_key}>"
     end
   end
 end
