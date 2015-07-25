@@ -15,7 +15,5 @@ describe Jibby::Commands::Load do
     end
 
     it { is_expected.to eql(true) }
-
-
   end
 end

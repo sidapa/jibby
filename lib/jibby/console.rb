@@ -1,6 +1,6 @@
 require 'base64'
 module Jibby
-  # This class provides the command loop for Jibby
+  # This class provides an interface to the user via the console
   class Console
     def clear_screen
       Gem.win_platform? ? (system 'cls') : (system 'clear')
@@ -14,6 +14,10 @@ module Jibby
     def silent_prompt(label)
       display_label(label)
       $stdin.noecho(&:gets).chomp
+    end
+
+    def puts(text)
+      puts text
     end
 
     private

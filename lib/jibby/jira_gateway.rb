@@ -12,7 +12,7 @@ module Jibby
     end
 
     def credentials(console)
-      puts "Login to #{@host}"
+      console.puts "Login to #{@host}"
       username = console.prompt 'Username:'
       password = console.silent_prompt 'Password:'
 
