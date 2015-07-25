@@ -1,28 +1,21 @@
 # Jibby
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jibby`. To experiment with that code, run `bin/console` for an interactive prompt.
+Jibby is an interactive Jira client. This allows you to load Jira tickets on the console.
 
-TODO: Delete this and the text above, and describe your gem
+TODO: Make better descriptions
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'jibby'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install jibby
+
 
 ## Usage
 
-TODO: Write usage instructions here
+run jibby from command line using the following syntax:
+
+    $ jibby <jira instance url>
+
+TODO: Finish
 
 ## Development
 
@@ -32,8 +25,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/jibby/fork )
+1. Fork it ( https://github.com/sidapa/jibby/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+3. Make changes
+4. Make sure specs and rubocop passes
+5. Commit your changes (`git commit -am 'Add some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Create a new Pull Request
