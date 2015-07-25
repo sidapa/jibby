@@ -34,16 +34,17 @@ describe Jibby::JiraGateway do
     end
   end
 
-  describe '#load_ticket' do
+  describe '#fetch_ticket' do
 
-    subject(:load_ticket_method) { new_gateway.load_ticket(key) }
+    subject(:fetch_ticket_method) { new_gateway.fetch_ticket(key) }
     let(:http_double) { OpenStruct.new }
     let(:key) { 'FOO1' }
     let(:result_hash) { { 'foo' => 'bar' } }
     let(:request_hash) do
       { 'fields' => result_hash }
     end
-    let(:response_double) { double(body: request_hash.to_json) }
+    let(:response_double) { double(body: request_hash.to_json, code: code) }
+    let(:code) { '200' }
 
     before(:each) do
       allow(Net::HTTP).to receive(:new).and_return(http_double)
@@ -51,5 +52,11 @@ describe Jibby::JiraGateway do
     end
 
     it { is_expected.to eql(result_hash) }
+
+    context 'error fetching' do
+      let(:code) { 404 }
+
+      it {is_expected.to eql(nil) }
+    end
   end
 end

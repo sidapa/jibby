@@ -19,11 +19,14 @@ module Jibby
       @authentication = Base64.strict_encode64("#{username}:#{password}")
     end
 
-    def load_ticket(key)
+    def fetch_ticket(key)
       path = "#{API_PATH}/issue/#{key}"
       req = Net::HTTP::Get.new(path)
       req['Authorization'] = "Basic #{@authentication}"
       response = http_object.request(req)
+
+      return nil unless response.code.to_i == 200
+
       JSON.parse(response.body)['fields']
     end
 

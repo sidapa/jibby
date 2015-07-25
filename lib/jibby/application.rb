@@ -20,8 +20,13 @@ module Jibby
       true
     end
 
-    def load_ticket(*params)
-      @gateway.load_ticket(*params)
+    def load_ticket(key)
+      ticket_hash = @gateway.fetch_ticket(key)
+
+      return nil unless ticket_hash
+
+      @current_key = key
+      @current_ticket = Jibby::Ticket.new(ticket_hash)
     end
 
     private

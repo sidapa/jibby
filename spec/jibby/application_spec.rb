@@ -39,12 +39,20 @@ describe Jibby::Application do
   end
 
   describe '#load_ticket' do
-    subject(:load_method) { new_application.load_ticket }
+    subject(:load_method) { new_application.load_ticket(key) }
     let(:load_result) { double }
+    let(:key) { 'FOO-1' }
+    let(:ticket_double) { double(class: Jibby::Ticket) }
 
-    it 'calls load_ticket on the gateway and forwards the return value' do
-      expect(gateway).to receive(:load_ticket).and_return(load_result)
-      expect(load_method).to eql(load_result)
+    it 'calls fetch_ticket on the gateway and forwards the return value' do
+      expect(gateway).to receive(:fetch_ticket).and_return(load_result)
+      allow(Jibby::Ticket).to receive(:new).and_return(ticket_double)
+      expect(load_method.class).to eql(Jibby::Ticket)
+    end
+
+    it 'returns nil if a ticket could not be fetched' do
+      allow(gateway).to receive(:fetch_ticket).and_return(nil)
+      expect(load_method).to eql(nil)
     end
   end
 end
