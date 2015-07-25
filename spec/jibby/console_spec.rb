@@ -53,4 +53,13 @@ describe Jibby::Console do
 
     it { is_expected.to eql(input_text) }
   end
+
+  describe '#output' do
+    let(:output_text) { 'foo' }
+
+    it 'wraps puts' do
+      expect(STDOUT).to receive(:puts).with(output_text)
+      new_console.output(output_text)
+    end
+  end
 end

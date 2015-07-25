@@ -16,7 +16,7 @@ module Jibby
       $stdin.noecho(&:gets).chomp
     end
 
-    def puts(text)
+    def output(text)
       puts text
     end
 

@@ -2,7 +2,7 @@ module Jibby
   module Commands
     class Exit
       def self.run(application, *_params)
-        application.console.puts 'bye!'
+        application.console.output 'bye!'
         false
       end
 

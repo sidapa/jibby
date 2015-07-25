@@ -17,7 +17,7 @@ module Jibby
       if @commands.keys.include? command.to_sym
         @commands[command.to_sym].call(application, *params)
       else
-        console.puts 'Command not found.'
+        console.output 'Command not found.'
         return true
       end
     end

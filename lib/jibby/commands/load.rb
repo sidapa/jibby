@@ -10,9 +10,9 @@ module Jibby
           application.current_ticket = Jibby::Ticket.new(result_hash)
           application.current_key = ticket_key
 
-          console.puts application.current_ticket.summary
+          console.output application.current_ticket.summary
         else
-          console.puts '#{ticket_key} not found.'
+          console.output '#{ticket_key} not found.'
         end
 
         true
