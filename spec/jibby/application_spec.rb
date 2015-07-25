@@ -6,7 +6,7 @@ describe Jibby::Application do
   end
 
   let(:gateway) { double }
-  let(:console) { double }
+  let(:console) { Jibby::Console.new }
 
   describe '::initialize' do
     it 'sets the necessary variables' do

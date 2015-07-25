@@ -21,7 +21,7 @@ describe Jibby::JiraGateway do
   describe '#credentials' do
     subject(:credentials) { new_gateway.credentials(console) }
 
-    let(:console) { double }
+    let(:console) { Jibby::Console.new }
     let(:username) { 'foo' }
     let(:password) { 'bar' }
 
