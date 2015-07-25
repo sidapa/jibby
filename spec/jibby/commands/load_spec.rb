@@ -7,9 +7,11 @@ describe Jibby::Commands::Load do
     let(:application_double) { OpenStruct.new }
     let(:ticket_key) { 'FOO-1' }
     let(:ticket_hash) { {} }
+    let(:ticket_double) { double(summary: 'foo') }
 
     before(:each) do
       allow(application_double).to receive(:load_ticket).and_return(ticket_hash)
+      allow(Jibby::Ticket).to receive(:new).and_return(ticket_double)
     end
 
     it { is_expected.to eql(true) }
