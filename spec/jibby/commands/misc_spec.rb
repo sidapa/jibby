@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Jibby::Commands::Exit do
+describe Jibby::Commands::Misc do
   describe '::run' do
-    subject(:run) { Jibby::Commands::Exit.run(application_double) }
+    subject(:exit) { Jibby::Commands::Misc.exit(application_double) }
     let(:application_double) { double(console: console) }
     let(:console) { Jibby::Console.new }
 
