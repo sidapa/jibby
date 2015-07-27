@@ -7,7 +7,12 @@ module Jibby
         false
       end
 
+      def self.clear_screen(application, *_params)
+        application.console.clear_screen
+      end
+
       Jibby::CommandParser.add_command([:exit, :quit, :q], method(:exit))
+      Jibby::CommandParser.add_command([:clear, :cls], method(:clear_screen))
     end
   end
 end

@@ -8,7 +8,8 @@ describe Jibby::Commands::Load do
     let(:console) { Jibby::Console.new }
     let(:ticket_key) { 'FOO-1' }
     let(:ticket_double) do
-      double(summary: 'test')
+      double(summary: 'test',
+             description: 'food')
     end
 
     before(:each) do
@@ -23,6 +24,19 @@ describe Jibby::Commands::Load do
         allow(application).to receive(:load_ticket).and_return(nil)
         expect(console).to receive(:output).with(error)
         expect(run).to eql(true)
+      end
+    end
+
+    context 'no ticket passed' do
+      let(:ticket_key) { nil }
+
+      it 'should not call load ticket from application' do
+        error_text = 'Please include a Jira Ticket number.'
+
+        expect(application).not_to receive(:load_ticket)
+        expect(console).to receive(:output).with(error_text)
+
+        run
       end
     end
   end
