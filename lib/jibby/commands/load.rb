@@ -2,19 +2,38 @@ module Jibby
   module Commands
     # The Load class provides the load command
     class Load
-      def self.run(application, *params)
-        key = params.first
-        ticket = application.load_ticket(key)
-        console = application.console
+      class << self
+        def run(application, *params)
+          console = application.console
 
-        unless ticket
-          console.output "#{key} was not found."
-          return true
+          check_params(console: console, params: params) do |key|
+            ticket = application.load_ticket(key)
+
+            unless ticket
+              console.output "#{key} was not found."
+              return true
+            end
+
+            display_ticket_info(console: console, ticket: ticket)
+          end
+
+          true
         end
 
-        console.output ticket.summary
+        private
 
-        true
+        def check_params(console:, params:)
+          if params.first
+            yield params.first
+          else
+            console.output 'Please include a Jira Ticket number.'
+          end
+        end
+
+        def display_ticket_info(console:, ticket:)
+          console.output ticket.summary
+          console.output ticket.description
+        end
       end
 
       Jibby::CommandParser.add_command([:load, :open, :l, :o], method(:run))
