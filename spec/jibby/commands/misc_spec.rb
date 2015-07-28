@@ -11,7 +11,10 @@ describe Jibby::Commands::Misc do
   end
 
   describe '::clear_screen' do
-    subject(:clear_screen) { Jibby::Commands::Misc.clear_screen(application_double) }
+    subject(:clear_screen) do
+      Jibby::Commands::Misc.clear_screen(application_double)
+    end
+
     it 'calls clear_screen from the console' do
       expect(console).to receive(:clear_screen)
       clear_screen
