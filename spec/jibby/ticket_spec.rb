@@ -31,4 +31,10 @@ describe Jibby::Ticket do
     expect(ticket.summary).to eql(summary)
     expect(ticket.reporter).to eql(reporter_name)
   end
+
+  describe '#attributes' do
+    subject(:attributes) { ticket.attributes }
+
+    it { is_expected.to eql(Jibby::Ticket::AVAILABLE_ATTRIBUTES) }
+  end
 end
