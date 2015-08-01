@@ -16,9 +16,9 @@ module Jibby
       username = console.prompt 'Username:'
       password = console.silent_prompt 'Password:'
 
-      if username && password
-        @authentication = Base64.strict_encode64("#{username}:#{password}")
-      end
+      return unless username && password
+
+      @authentication = Base64.strict_encode64("#{username}:#{password}")
     end
 
     def fetch_ticket(key)
