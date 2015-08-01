@@ -4,5 +4,5 @@ require 'bundler/setup'
 require 'jibby'
 
 # TODO: Make sure host is valid
-host = ARGV.size > 0 ? ARGV.first : 'jira.atlassian.com'
+host = ARGV.size > 0 ? ARGV.first : 'https://jira.atlassian.com'
 Jibby.start(host)
