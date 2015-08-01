@@ -11,10 +11,10 @@ module Jibby
       @host = URI.parse(host)
     end
 
-    def credentials(console)
-      console.output "Login to #{@host}"
-      username = console.prompt 'Username:'
-      password = console.silent_prompt 'Password:'
+    def credentials(interface)
+      interface.output "Login to #{@host}"
+      username = interface.prompt 'Username:'
+      password = interface.silent_prompt 'Password:'
 
       return unless username && password
 

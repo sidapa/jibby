@@ -10,7 +10,7 @@ describe Jibby do
   describe '::start' do
     let(:application_double) { double }
 
-    it 'calls start on a new instance of console' do
+    it 'calls start on a new instance of application' do
       expect(Jibby::Application).to receive(:new).and_return(application_double)
       expect(application_double).to receive(:start)
 

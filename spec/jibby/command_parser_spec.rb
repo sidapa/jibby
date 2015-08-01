@@ -56,7 +56,7 @@ describe Jibby::CommandParser do
     end
 
     let(:method) { double }
-    let(:application_double) { double(console: Jibby::Console.new) }
+    let(:application_double) { double(interface: Jibby::Console.new) }
     let(:input) { "#{call_name} #{param}" }
     let(:param) { 'opt' }
     let(:call_name) { :foo }

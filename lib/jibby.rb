@@ -6,7 +6,6 @@ module Jibby
 
   def start(host)
     gateway = JiraGateway.new(host)
-    console = Console.new
-    Application.new(gateway: gateway, console: console).start
+    Application.new(gateway: gateway).start
   end
 end

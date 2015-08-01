@@ -4,8 +4,8 @@ require 'ostruct'
 describe Jibby::Commands::Load do
   describe '::run' do
     subject(:run) { Jibby::Commands::Load.run(application, ticket_key) }
-    let(:application) { OpenStruct.new(console: console) }
-    let(:console) { Jibby::Console.new }
+    let(:application) { OpenStruct.new(interface: interface) }
+    let(:interface) { Jibby::Console.new }
     let(:ticket_key) { 'FOO-1' }
     let(:ticket_double) do
       double(summary: 'test',
@@ -22,7 +22,7 @@ describe Jibby::Commands::Load do
       it 'displays an error and returns true' do
         error = "#{ticket_key} was not found."
         allow(application).to receive(:load_ticket).and_return(nil)
-        expect(console).to receive(:output).with(error)
+        expect(interface).to receive(:output).with(error)
         expect(run).to eql(true)
       end
     end
@@ -34,7 +34,7 @@ describe Jibby::Commands::Load do
         error_text = 'Please include a Jira Ticket number.'
 
         expect(application).not_to receive(:load_ticket)
-        expect(console).to receive(:output).with(error_text)
+        expect(interface).to receive(:output).with(error_text)
 
         run
       end

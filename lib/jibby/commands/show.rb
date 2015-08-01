@@ -5,7 +5,7 @@ module Jibby
       class << self
         def run(application, attribute)
           ticket = application.current_ticket
-          application.console.output output(ticket, attribute.to_sym)
+          application.interface.output output(ticket, attribute.to_sym)
           true
         end
 

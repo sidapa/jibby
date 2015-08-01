@@ -3,12 +3,12 @@ module Jibby
     # Provides the exit command
     class Misc
       def self.exit(application, *_params)
-        application.console.output 'bye!'
+        application.interface.output 'bye!'
         false
       end
 
       def self.clear_screen(application, *_params)
-        application.console.clear_screen
+        application.interface.clear_screen
       end
 
       Jibby::CommandParser.add_command([:exit, :quit, :q], method(:exit))

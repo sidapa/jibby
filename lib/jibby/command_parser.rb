@@ -13,12 +13,12 @@ module Jibby
 
     def self.parse(application:, input:)
       command, *params = input.split(' ')
-      console = application.console
+      interface = application.interface
 
       if @commands.keys.include? command.to_sym
         @commands[command.to_sym].call(application, *params)
       else
-        console.output 'Command not found.'
+        interface.output 'Command not found.'
         return true
       end
     end

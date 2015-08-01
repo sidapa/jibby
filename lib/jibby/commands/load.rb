@@ -4,17 +4,17 @@ module Jibby
     class Load
       class << self
         def run(application, *params)
-          console = application.console
+          interface = application.interface
 
-          check_params(console: console, params: params) do |key|
+          check_params(interface: interface, params: params) do |key|
             ticket = application.load_ticket(key)
 
             unless ticket
-              console.output "#{key} was not found."
+              interface.output "#{key} was not found."
               return true
             end
 
-            display_ticket_info(console: console, ticket: ticket)
+            display_ticket_info(interface: interface, ticket: ticket)
           end
 
           true
@@ -22,17 +22,17 @@ module Jibby
 
         private
 
-        def check_params(console:, params:)
+        def check_params(interface:, params:)
           if params.first
             yield params.first
           else
-            console.output 'Please include a Jira Ticket number.'
+            interface.output 'Please include a Jira Ticket number.'
           end
         end
 
-        def display_ticket_info(console:, ticket:)
-          console.output ticket.summary
-          console.output ticket.description
+        def display_ticket_info(interface:, ticket:)
+          interface.output ticket.summary
+          interface.output ticket.description
         end
       end
 

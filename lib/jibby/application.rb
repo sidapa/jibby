@@ -2,23 +2,23 @@ require 'base64'
 module Jibby
   # This class provides the command loop for Jibby
   class Application
-    attr_reader :gateway, :console
+    attr_reader :gateway, :interface
     attr_accessor :current_key, :current_ticket
 
-    def initialize(gateway:, console:)
+    def initialize(gateway:, interface: Console.new)
       @gateway = gateway
-      @console = console
+      @interface = interface
 
       @current_key = nil
       @current_ticket = nil
     end
 
     def start
-      return false unless gateway.credentials(console)
-      console.clear_screen
+      return false unless gateway.credentials(interface)
+      interface.clear_screen
       loop do
         parse_params = {
-          input: console.prompt(prompt_text),
+          input: interface.prompt(prompt_text),
           application: self
         }
 

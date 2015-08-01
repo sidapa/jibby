@@ -19,16 +19,16 @@ describe Jibby::JiraGateway do
   end
 
   describe '#credentials' do
-    subject(:credentials) { new_gateway.credentials(console) }
+    subject(:credentials) { new_gateway.credentials(interface) }
 
-    let(:console) { Jibby::Console.new }
+    let(:interface) { Jibby::Console.new }
     let(:username) { 'foo' }
     let(:password) { 'bar' }
 
-    it 'uses console to set credentials then encodes results' do
-      expect(console).to receive(:prompt).with('Username:')
+    it 'uses interface to set credentials then encodes results' do
+      expect(interface).to receive(:prompt).with('Username:')
         .and_return(username)
-      expect(console).to receive(:silent_prompt).with('Password:')
+      expect(interface).to receive(:silent_prompt).with('Password:')
         .and_return(password)
       expect(credentials).to eql('Zm9vOmJhcg==')
     end

@@ -2,16 +2,15 @@ require 'spec_helper'
 
 describe Jibby::Application do
   subject(:new_application) do
-    Jibby::Application.new(gateway: gateway, console: console)
+    Jibby::Application.new(gateway: gateway, interface: interface)
   end
 
   let(:gateway) { double }
-  let(:console) { Jibby::Console.new }
+  let(:interface) { nil }
 
   describe '::initialize' do
     it 'sets the necessary variables' do
       expect(new_application.instance_variable_get(:@gateway)).to eql(gateway)
-      expect(new_application.instance_variable_get(:@console)).to eql(console)
       expect(new_application.instance_variable_get(:@current_key))
         .to eql(nil)
       expect(new_application.instance_variable_get(:@current_ticket))
@@ -20,6 +19,8 @@ describe Jibby::Application do
   end
 
   describe '#start' do
+    let(:interface) { double }
+
     subject(:start_method) { new_application.start }
     context 'with false credentials' do
       it 'returns false' do
@@ -31,8 +32,9 @@ describe Jibby::Application do
     context 'after normal exit' do
       it 'returns true' do
         allow(gateway).to receive(:credentials).and_return(true)
-        allow(console).to receive(:clear_screen)
-        allow(console).to receive(:prompt).and_return('exit')
+        allow(interface).to receive(:clear_screen)
+        allow(interface).to receive(:prompt).and_return('exit')
+        expect(interface).to receive(:output).with('bye!')
         expect(start_method).to eql(true)
       end
     end
