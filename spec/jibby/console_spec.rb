@@ -92,8 +92,8 @@ describe Jibby::Console do
 
   describe '#boxed' do
     it 'calls output based on yielded input' do
-      line_1 = "foo"
-      line_2 = "bar"
+      line_1 = 'foo'
+      line_2 = 'bar'
       output = []
       output << line_1
       output << line_2

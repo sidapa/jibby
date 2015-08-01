@@ -12,18 +12,32 @@ module Jibby
                             :summary,
                             :reporter]
 
-    def initialize(input_hash)
-      @issue_type = input_hash['issuetype']['name']
-      @project = input_hash['project']['name']
-      @assignee = input_hash['assignee']['displayName']
-      @status = input_hash['status']['name']
-      @description = input_hash['description']
-      @summary = input_hash['summary']
-      @reporter = input_hash['reporter']['displayName']
+    # TODO: Fix initialize method
+    # rubocop:disable Metrics/AbcSize
+    def initialize(data:, interface: Jibby::Console.new)
+      @interface = interface
+      @issue_type = data['issuetype']['name']
+      @project = data['project']['name']
+      @assignee = data['assignee']['displayName']
+      @status = data['status']['name']
+      @description = data['description']
+      @summary = data['summary']
+      @reporter = data['reporter']['displayName']
     end
 
     def attributes
       AVAILABLE_ATTRIBUTES
+    end
+
+    def display_details
+      @interface.boxed do |lines|
+        lines << @summary
+        lines << "Assigned to: #{@assignee}"
+        lines << "Reported by: #{@reporter}"
+      end
+
+      @interface.output @description
+      @interface.separator('-')
     end
   end
 end

@@ -42,6 +42,7 @@ describe Jibby::Application do
 
   describe '#load_ticket' do
     subject(:load_method) { new_application.load_ticket(key) }
+    let(:interface) { double }
     let(:load_result) { double }
     let(:key) { 'FOO-1' }
     let(:ticket_double) { double(class: Jibby::Ticket) }
@@ -54,6 +55,7 @@ describe Jibby::Application do
 
     it 'returns nil if a ticket could not be fetched' do
       allow(gateway).to receive(:fetch_ticket).and_return(nil)
+      expect(interface).to receive(:output).with("#{key} was not found.")
       expect(load_method).to eql(nil)
     end
   end

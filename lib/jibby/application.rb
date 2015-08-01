@@ -31,10 +31,14 @@ module Jibby
     def load_ticket(key)
       ticket_hash = @gateway.fetch_ticket(key)
 
-      return nil unless ticket_hash
-
-      @current_key = key
-      @current_ticket = Jibby::Ticket.new(ticket_hash)
+      if ticket_hash
+        @current_key = key
+        @current_ticket = Jibby::Ticket.new(data: ticket_hash,
+                                            interface: @interface)
+      else
+        @interface.output "#{key} was not found."
+        return nil
+      end
     end
 
     private

@@ -14,15 +14,14 @@ describe Jibby::Commands::Load do
 
     before(:each) do
       allow(application).to receive(:load_ticket).and_return(ticket_double)
+      allow(ticket_double).to receive(:display_details)
     end
 
     it { is_expected.to eql(true) }
 
     context 'ticket key not found' do
       it 'displays an error and returns true' do
-        error = "#{ticket_key} was not found."
         allow(application).to receive(:load_ticket).and_return(nil)
-        expect(interface).to receive(:output).with(error)
         expect(run).to eql(true)
       end
     end

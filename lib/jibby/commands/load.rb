@@ -9,12 +9,9 @@ module Jibby
           check_params(interface: interface, params: params) do |key|
             ticket = application.load_ticket(key)
 
-            unless ticket
-              interface.output "#{key} was not found."
-              return true
-            end
+            return true unless ticket
 
-            display_ticket_info(interface: interface, ticket: ticket)
+            ticket.display_details
           end
 
           true
@@ -28,11 +25,6 @@ module Jibby
           else
             interface.output 'Please include a Jira Ticket number.'
           end
-        end
-
-        def display_ticket_info(interface:, ticket:)
-          interface.output ticket.summary
-          interface.output ticket.description
         end
       end
 

@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe Jibby::Ticket do
-  subject(:ticket) { Jibby::Ticket.new(result_hash) }
+  subject(:ticket) do
+    Jibby::Ticket.new(data: result_hash, interface: interface)
+  end
+
   let(:result_hash) do
     {
       'issuetype' => { 'name' => issuetype_name },
@@ -14,6 +17,7 @@ describe Jibby::Ticket do
     }
   end
 
+  let(:interface) { Jibby::Console.new }
   let(:issuetype_name) { 'Issue Name' }
   let(:project_name) { 'Test Project' }
   let(:assignee_name) { 'Test Assignee' }
@@ -36,5 +40,16 @@ describe Jibby::Ticket do
     subject(:attributes) { ticket.attributes }
 
     it { is_expected.to eql(Jibby::Ticket::AVAILABLE_ATTRIBUTES) }
+  end
+
+  describe '#display_detais' do
+    subject(:display_details) { ticket.display_details }
+
+    it 'shows information via the interface' do
+      expect(interface).to receive(:output).at_least(:once)
+      expect(interface).to receive(:separator).at_least(:once)
+
+      display_details
+    end
   end
 end
