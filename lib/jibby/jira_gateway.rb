@@ -16,13 +16,15 @@ module Jibby
       username = console.prompt 'Username:'
       password = console.silent_prompt 'Password:'
 
-      @authentication = Base64.strict_encode64("#{username}:#{password}")
+      if username && password
+        @authentication = Base64.strict_encode64("#{username}:#{password}")
+      end
     end
 
     def fetch_ticket(key)
       path = "#{API_PATH}/issue/#{key}"
       req = Net::HTTP::Get.new(path)
-      req['Authorization'] = "Basic #{@authentication}"
+      req['Authorization'] = "Basic #{@authentication}" if @authentication
       response = http_object.request(req)
 
       return nil unless response.code.to_i == 200
