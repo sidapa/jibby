@@ -62,4 +62,19 @@ describe Jibby::Console do
       new_console.output(output_text)
     end
   end
+
+  describe '#prompt_login' do
+    subject(:prompt_login) { new_console.prompt_login }
+    let(:username) { 'foo' }
+    let(:password) { 'bar' }
+
+    before(:each) do
+      expect(new_console).to receive(:prompt).with('Username:')
+        .and_return(username)
+      expect(new_console).to receive(:silent_prompt).with('Password:')
+        .and_return(password)
+    end
+
+    it { is_expected.to eql([username, password]) }
+  end
 end

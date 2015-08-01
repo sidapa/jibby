@@ -26,10 +26,8 @@ describe Jibby::JiraGateway do
     let(:password) { 'bar' }
 
     it 'uses interface to set credentials then encodes results' do
-      expect(interface).to receive(:prompt).with('Username:')
-        .and_return(username)
-      expect(interface).to receive(:silent_prompt).with('Password:')
-        .and_return(password)
+      expect(interface).to receive(:prompt_login)
+        .and_return([username, password])
       expect(credentials).to eql('Zm9vOmJhcg==')
     end
   end

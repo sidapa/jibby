@@ -20,6 +20,14 @@ module Jibby
       puts text
     end
 
+    def prompt_login
+      output "Login to #{@host}"
+      username = prompt 'Username:'
+      password = silent_prompt 'Password:'
+
+      [username, password]
+    end
+
     private
 
     def display_label(label)

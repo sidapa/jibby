@@ -12,9 +12,7 @@ module Jibby
     end
 
     def credentials(interface)
-      interface.output "Login to #{@host}"
-      username = interface.prompt 'Username:'
-      password = interface.silent_prompt 'Password:'
+      username, password = *interface.prompt_login
 
       return unless username && password
 
@@ -35,9 +33,9 @@ module Jibby
     private
 
     def http_object
-      @http ||= Net::HTTP.new(@host.host, @host.port).tap do |h|
-        h.use_ssl = true
-        h.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      @http ||= Net::HTTP.new(@host.host, @host.port).tap do |http|
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
   end
