@@ -77,4 +77,36 @@ describe Jibby::Console do
 
     it { is_expected.to eql([username, password]) }
   end
+
+  describe '#separator' do
+    subject(:separator) { new_console.separator(marker) }
+    let(:marker) { '=' }
+
+    it 'should output using the marker' do
+      expect_any_instance_of(Object).to receive(:`).with('tput cols')
+        .and_return(5)
+      expect(new_console).to receive(:output).with('=====')
+      separator
+    end
+  end
+
+  describe '#boxed' do
+    it 'calls output based on yielded input' do
+      line_1 = "foo"
+      line_2 = "bar"
+      output = []
+      output << line_1
+      output << line_2
+
+      expect(new_console).to receive(:output).with(output.join("\n"))
+      allow_any_instance_of(Object).to receive(:`).with('tput cols')
+        .and_return(5)
+      allow(new_console).to receive(:separator)
+
+      new_console.boxed do |lines|
+        lines << line_1
+        lines << line_2
+      end
+    end
+  end
 end

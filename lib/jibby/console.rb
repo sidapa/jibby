@@ -21,17 +21,32 @@ module Jibby
     end
 
     def prompt_login
-      output "Login to #{@host}"
       username = prompt 'Username:'
       password = silent_prompt 'Password:'
 
       [username, password]
     end
 
+    def separator(marker = '=')
+      output marker * number_of_columns
+    end
+
+    def boxed(marker = '=')
+      lines = []
+      yield lines
+      separator(marker)
+      output lines.join("\n")
+      separator(marker)
+    end
+
     private
 
     def display_label(label)
       "#{label} ".display
+    end
+
+    def number_of_columns
+      `tput cols`.to_i
     end
   end
 end
