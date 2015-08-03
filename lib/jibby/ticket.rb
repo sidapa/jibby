@@ -1,32 +1,19 @@
 module Jibby
   # Contains information about a Jira Ticket
   class Ticket
-    attr_reader :issue_type, :project, :assignee
-    attr_reader :status, :description, :summary, :reporter
-
-    AVAILABLE_ATTRIBUTES = [:issue_type,
-                            :project,
-                            :assignee,
-                            :status,
-                            :description,
-                            :summary,
-                            :reporter]
-
-    # TODO: Fix initialize method
-    # rubocop:disable Metrics/AbcSize
+    # TODO: pass in application object instead of interface
     def initialize(data:, interface: Jibby::Console.new)
       @interface = interface
-      @issue_type = data['issuetype']['name']
-      @project = data['project']['name']
-      @assignee = data['assignee']['displayName']
-      @status = data['status']['name']
-      @description = data['description']
-      @summary = data['summary']
-      @reporter = data['reporter']['displayName']
+      @source = data
+
+      attribute_map.each_pair do |k, v|
+        instance_variable_set("@#{k}", fetch_value(v))
+        add_attr_reader k
+      end
     end
 
     def attributes
-      AVAILABLE_ATTRIBUTES
+      @attributes ||= attribute_map.keys
     end
 
     def display_details
@@ -39,5 +26,39 @@ module Jibby
       @interface.output @description
       @interface.separator('-')
     end
+
+    private
+
+    def attribute_map
+      Jibby::TicketMapper::ATTRIBUTE_MAP
+    end
+
+    def fetch_value(path)
+      path.reduce(@source) do |a, e|
+        a.fetch(e)
+      end
+    end
+
+    def add_attr_reader(value)
+      class <<self
+        self
+      end.class_eval do
+        attr_reader value
+      end
+    end
+  end
+
+  # TODO: Move mapper to the application
+  # This class temporarily creates an attribute map for a ticket
+  class TicketMapper
+    ATTRIBUTE_MAP = {
+      issue_type: %w(issuetype name),
+      project: %w(project name),
+      assignee: %w(assignee displayName),
+      status: %w(status name),
+      description: %w(description),
+      summary: %w(summary),
+      reporter: %w(reporter displayName)
+    }
   end
 end

@@ -31,7 +31,7 @@ describe Jibby::Ticket, :vcr do
   describe '#attributes' do
     subject(:attributes) { ticket.attributes }
 
-    it { is_expected.to eql(Jibby::Ticket::AVAILABLE_ATTRIBUTES) }
+    it { is_expected.to eql(Jibby::TicketMapper::ATTRIBUTE_MAP.keys) }
   end
 
   describe '#display_detais' do
