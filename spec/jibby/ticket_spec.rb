@@ -1,39 +1,31 @@
 require 'spec_helper'
 
-describe Jibby::Ticket do
+describe Jibby::Ticket, :vcr do
   subject(:ticket) do
     Jibby::Ticket.new(data: result_hash, interface: interface)
   end
 
   let(:result_hash) do
-    {
-      'issuetype' => { 'name' => issuetype_name },
-      'project' => { 'name' => project_name },
-      'assignee' => { 'displayName' => assignee_name },
-      'status' => { 'name' => status_name },
-      'description' => description,
-      'summary' => summary,
-      'reporter' => { 'displayName' => reporter_name }
-    }
+    result = nil
+    VCR.use_cassette 'jira/ticket' do
+      gateway = Jibby::JiraGateway.new('https://jira.foo.com')
+      result = gateway.fetch_ticket(ticket_name)
+    end
+    return result
   end
 
+  let(:ticket_name) { 'FOO-1' }
+
   let(:interface) { Jibby::Console.new }
-  let(:issuetype_name) { 'Issue Name' }
-  let(:project_name) { 'Test Project' }
-  let(:assignee_name) { 'Test Assignee' }
-  let(:status_name) { 'Status Name' }
-  let(:description) { 'Test Description' }
-  let(:summary) { 'Test Summary' }
-  let(:reporter_name) { 'Test Reporter' }
 
   it 'should set the correct accessible variables' do
-    expect(ticket.issue_type).to eql(issuetype_name)
-    expect(ticket.project).to eql(project_name)
-    expect(ticket.assignee).to eql(assignee_name)
-    expect(ticket.status).to eql(status_name)
-    expect(ticket.description).to eql(description)
-    expect(ticket.summary).to eql(summary)
-    expect(ticket.reporter).to eql(reporter_name)
+    expect(ticket.issue_type).to eql('Feature')
+    expect(ticket.project).to eql('FOO Project')
+    expect(ticket.assignee).to eql('Assigned User')
+    expect(ticket.status).to eql('Resolved')
+    expect(ticket.reporter).to eql('Reporter User')
+    expect(ticket.description).to eql('This is a sample description')
+    expect(ticket.summary).to eql('Foo Summary')
   end
 
   describe '#attributes' do

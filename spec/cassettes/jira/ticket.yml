@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://jira.foo.com/rest/api/2/issue/FOO-1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.0.15
+      Date:
+      - Sat, 01 Aug 2015 13:25:16 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Arequestid:
+      - 805x4750255x1
+      X-Asen:
+      - SEN-2194346
+      Set-Cookie:
+      - JSESSIONID=56D6EF71E1B266D4E36F3F5D27B06EDC; Path=/; HttpOnly
+      - atlassian.xsrf.token=BJ6X-DEO0-GOR6-FCG2|6fe82660dae73fba4a059e40a27ce12a64381b08|lin;
+        Path=/
+      X-Seraph-Loginreason:
+      - OK
+      X-Asessionid:
+      - 170axr9
+      X-Ausername:
+      - foouser
+      Cache-Control:
+      - no-cache, no-store, no-transform
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"expand":"renderedFields,names,schema,transitions,operations,editmeta,changelog","id":"1","self":"https://jira.foo.com/rest/api/2/issue/1","key":
+        "FOO-1","fields":{"issuetype":{"self":"https://jira.foo.com/rest/api/2/issuetype/7","id":"7","description":"A user story","iconUrl":"https://jira.foo.com/
+        images/icons/issuetypes/story.png","name":"Feature","subtask":false},"project":{"self":"https://jira.foo.com/rest/api/2/project/1","id":"1","key":"F
+        OO","name":"FOO Project","avatarUrls":{"48x48":"https://jira.foo.com/secure/projectavatar?pid=1&avatarId=11301","24x24":"https://jira.foo.com/secure/proje
+        ctavatar?size=small&pid=1&avatarId=11301","16x16":"https://jira.foo.com/secure/projectavatar?size=xsmall&pid=1&avatarId=11301","32x32":"https://jira.foo
+        .com/secure/projectavatar?size=medium&pid=1&avatarId=11301"}},"customfield_11000":"1|i00c43:","fixVersions":[],"customfield_11200":null,"resolution":null,"cus
+        tomfield_11401":null,"customfield_11400":null,"customfield_10500":null,"customfield_10900":"ChangeMe","customfield_10901":null,"resolutiondate":null,"workratio":-1,"
+        lastViewed":"2015-07-15T09:02:09.340+0000","watches":{"self":"https://jira.foo.com/rest/api/2/issue/FOO-1/watchers","watchCount":3,"isWatching":true},"created
+        ":"2015-07-13T18:15:16.000+0000","customfield_10300":["com.atlassian.greenhopper.service.sprint.Sprint@45c52dd5[id=24841,rapidViewId=4161,state=CLOSED,name=0.0.88.0
+        Jul 23,startDate=2015-07-13T04:58:35.489Z,endDate=2015-07-23T04:58:00.000Z,completeDate=2015-07-27T01:22:05.839Z,sequence=24841]"],"labels":[],"customfield_11303":null,"customfield_11304":{"self":"https://jira.foo.com/rest/api/2/customFieldOption/10803","value":"No","id":"10803"},"customfield_11305":{"self":"https://jira.foo.com/rest/api/2/customFieldOption/11401","value":"Select
+        Foomaker","id":"11401","child":{"self":"https://jira.foo.com/rest/api/2/customFieldOption/11402","value":"Watchers
+        added after create","id":"11402"}},"issuelinks":[],"assignee":{"self":"https://jira.foo.com/rest/api/2/user?username=foouser","name":"foouser","emailAddress":"assigned_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/002?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/002?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/002?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/002?d=mm&s=32"},"displayName":"Assigned
+        User","active":true},"updated":"2015-07-16T02:41:37.000+0000","status":{"self":"https://jira.foo.com/rest/api/2/status/5","description":"A
+        resolution has been taken, and it is awaiting verification by reporter. From
+        here issues are either reopened, or are closed.","iconUrl":"https://jira.foo.com/images/icons/statuses/resolved.png","name":"Resolved","id":"5","statusCategory":{"self":"https://jira.foo.com/rest/api/2/statuscategory/3","id":3,"key":"done","colorName":"green","name":"Complete"}},"components":[{"self":"https://jira.foo.com/rest/api/2/component/10800","id":"10800","name":"FooTeam"}],"description":"This
+        is a sample description","customfield_11300":null,"customfield_11103":null,"customfield_11301":null,"customfield_11302":null,"customfield_10005":null,"customfield_10600":null,"attachment":[{"self":"https://jira.foo.com/rest/api/2/attachment/37070","id":"37070","filename":"FOO-1.png","author":{"self":"https://jira.foo.com/rest/api/2/user?username=comment_user","name":"comment_user","emailAddress":"comment_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/001?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/001?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/001?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/001?d=mm&s=32"},"displayName":"Comment
+        User","active":true},"created":"2015-07-16T02:41:23.000+0000","size":255601,"mimeType":"image/png","content":"https://jira.foo.com/secure/attachment/37070/FOO-1.png","thumbnail":"https://jira.foo.com/secure/thumbnail/37070/_thumb_37070.png"}],"customfield_10605":null,"summary":"Foo Summary","creator":{"self":"https://jira.foo.com/rest/api/2/user?username=reporter_user","name":"reporter_user","emailAddress":"reporter_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/003?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/003?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/003?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/003?d=mm&s=32"},"displayName":"Reporter
+        User","active":true},"subtasks":[],"reporter":{"self":"https://jira.foo.com/rest/api/2/user?username=reporter_user","name":"reporter_user","emailAddress":"reporter_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/003?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/003?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/003?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/003?d=mm&s=32"},"displayName":"Reporter
+        User","active":true},"customfield_10000":null,"customfield_10001":null,"customfield_10002":3.0,"customfield_10003":null,"customfield_10004":"9223372036854775807","customfield_10202":null,"customfield_10400":null,"customfield_11403":null,"customfield_11402":null,"environment":null,"customfield_11405":null,"customfield_11404":null,"customfield_11407":null,"customfield_11406":null,"customfield_11408":null,"comment":{"startAt":0,"maxResults":2,"total":2,"comments":[{"self":"https://jira.foo.com/rest/api/2/issue/1/comment/99019","id":"99019","author":{"self":"https://jira.foo.com/rest/api/2/user?username=foouser","name":"foouser","emailAddress":"assigned_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/002?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/002?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/002?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/002?d=mm&s=32"},"displayName":"Assigned
+        User","active":true},"body":"Sample comment #1","updateAuthor":{"self":"https://jira.foo.com/rest/api/2/user?username=foouser","name":"foouser","emailAddress":"assigned_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/002?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/002?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/002?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/002?d=mm&s=32"},"displayName":"Assigned
+        User","active":true},"created":"2015-07-15T03:10:39.000+0000","updated":"2015-07-15T03:10:39.000+0000"},{"self":"https://jira.foo.com/rest/api/2/issue/1/comment/99208","id":"99208","author":{"self":"https://jira.foo.com/rest/api/2/user?username=comment_user","name":"comment_user","emailAddress":"comment_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/001?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/001?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/001?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/001?d=mm&s=32"},"displayName":"Comment
+        User","active":true},"body":"Verified.","updateAuthor":{"self":"https://jira.foo.com/rest/api/2/user?username=comment_user","name":"comment_user","emailAddress":"comment_user@foo.com","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/001?d=mm&s=48","24x24":"https://secure.gravatar.com/avatar/001?d=mm&s=24","16x16":"https://secure.gravatar.com/avatar/001?d=mm&s=16","32x32":"https://secure.gravatar.com/avatar/001?d=mm&s=32"},"displayName":"Comment
+        User","active":true},"created":"2015-07-16T02:41:23.000+0000","updated":"2015-07-16T02:41:23.000+0000"}]}}}'
+    http_version: 
+  recorded_at: Sat, 01 Aug 2015 13:25:15 GMT
+recorded_with: VCR 2.9.3
