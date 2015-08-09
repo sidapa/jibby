@@ -55,11 +55,10 @@ describe Jibby::Console do
   end
 
   describe '#output' do
-    let(:output_text) { 'foo' }
+    subject(:output_text) { new_console.output 'foo' }
 
     it 'wraps puts' do
-      expect(STDOUT).to receive(:puts).with(output_text)
-      new_console.output(output_text)
+      expect { output_text }.to output("foo\n").to_stdout
     end
   end
 

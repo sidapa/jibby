@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 require 'ostruct'
 
 describe Jibby::Commands::Show do
@@ -10,7 +11,8 @@ describe Jibby::Commands::Show do
     end
 
     let(:gateway) { Jibby::JiraGateway.new('http://foo.com') }
-    let(:interface) { Jibby::Console.new }
+    let(:interface) { Jibby::Console.new(string_io) }
+    let(:string_io) { StringIO.new }
     let(:attribute) { 'summary' }
     let(:ticket_double) do
       OpenStruct.new(summary: 'test',
@@ -33,9 +35,8 @@ describe Jibby::Commands::Show do
       before(:each) { application.current_ticket = nil }
 
       it 'prints an error message and returns true' do
-        expect(interface).to receive(:output)
-          .with('Please load a ticket first.')
         expect(run).to eql(true)
+        expect(string_io.string).to eql("Please load a ticket first.\n")
       end
     end
 
@@ -43,8 +44,8 @@ describe Jibby::Commands::Show do
       let(:attribute) { 'foo' }
 
       it 'prints an error message and returns true' do
-        expect(interface).to receive(:output).with('Invalid attribute')
         expect(run).to eql(true)
+        expect(string_io.string).to eql("Invalid attribute\n")
       end
     end
   end

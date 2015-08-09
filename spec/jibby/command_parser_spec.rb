@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 
 describe Jibby::CommandParser do
   subject(:parser) { Jibby::CommandParser }
@@ -9,6 +10,7 @@ describe Jibby::CommandParser do
   before(:each) do
     Jibby::CommandParser.instance_variable_set(:@commands, {})
   end
+
   describe '::add_command' do
     subject(:add_command_method) { parser.add_command(name, method) }
 
@@ -56,7 +58,15 @@ describe Jibby::CommandParser do
     end
 
     let(:method) { double }
-    let(:application_double) { double(interface: Jibby::Console.new) }
+
+    let(:application_double) do
+      double(interface: Jibby::Console.new(tempio))
+    end
+
+    let(:tempio) do
+      StringIO.new
+    end
+
     let(:input) { "#{call_name} #{param}" }
     let(:param) { 'opt' }
     let(:call_name) { :foo }
@@ -68,6 +78,11 @@ describe Jibby::CommandParser do
 
     context 'key is not registered' do
       let(:call_name) { :not_foo }
+
+      it 'displays Command not found error' do
+        parse_method
+        expect(tempio.string).to eql("Command not found.\n")
+      end
 
       it { is_expected.to eql(true) }
     end

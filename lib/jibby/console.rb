@@ -2,22 +2,27 @@ require 'base64'
 module Jibby
   # This class provides an interface to the user via the console
   class Console
+    def initialize(interface = nil)
+      @output = interface || $stdout
+      @input = interface || $stdin
+    end
+
     def clear_screen
       Gem.win_platform? ? (system 'cls') : (system 'clear')
     end
 
     def prompt(label)
       display_label(label)
-      $stdin.gets.chomp
+      @input.gets.chomp
     end
 
     def silent_prompt(label)
       display_label(label)
-      $stdin.noecho(&:gets).chomp
+      @input.noecho(&:gets).chomp
     end
 
     def output(text)
-      puts text
+      @output.puts text
     end
 
     def prompt_login

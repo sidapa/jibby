@@ -1,11 +1,18 @@
 require 'spec_helper'
+require 'stringio'
 
 describe Jibby::Commands::Misc do
   let(:application_double) { double(interface: interface) }
-  let(:interface) { Jibby::Console.new }
+  let(:interface) { Jibby::Console.new(string_io) }
+  let(:string_io) { StringIO.new }
 
   describe '::run' do
-    subject(:exit) { Jibby::Commands::Misc.exit(application_double) }
+    subject(:exit_command) { Jibby::Commands::Misc.exit(application_double) }
+
+    it 'says goodbye to the user' do
+      exit_command
+      expect(string_io.string).to eql("bye!\n")
+    end
 
     it { is_expected.to eql(false) }
   end
