@@ -4,16 +4,19 @@ module Jibby
     # TODO: pass in application object instead of interface
     def initialize(data:, interface: Jibby::Console.new)
       @interface = interface
+      @comments = []
       @source = data
 
       attribute_map.each_pair do |k, v|
         instance_variable_set("@#{k}", fetch_value(v))
         add_attr_reader k
       end
+
+      add_comments
     end
 
     def attributes
-      @attributes ||= attribute_map.keys
+      @attributes ||= attribute_map.keys + [:comments]
     end
 
     def display_details
@@ -27,7 +30,24 @@ module Jibby
       @interface.separator('-')
     end
 
+    # TODO: This needs to return comment details instead of
+    # interfacing directly with the user. See comments on
+    # the Commands::Show
+    def comments
+      return 'Ticket has no comments.' unless @comments.any?
+      @comments.map(&:display_details) && nil
+    end
+
     private
+
+    def add_comments
+      comment_hashes = @source['comment']['comments']
+
+      comment_hashes.each do |comment|
+        comment['jibby_index'] = @comments.size
+        @comments << Jibby::Comment.new(data: comment, interface: @interface)
+      end
+    end
 
     def attribute_map
       Jibby::TicketMapper::ATTRIBUTE_MAP
