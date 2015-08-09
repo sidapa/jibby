@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 require 'ostruct'
 
 describe Jibby::JiraGateway do
@@ -19,16 +20,47 @@ describe Jibby::JiraGateway do
   end
 
   describe '#credentials' do
-    subject(:credentials) { new_gateway.credentials(interface) }
+    subject(:credentials) do
+      VCR.use_cassette 'jira/user' do
+        new_gateway.credentials(interface)
+      end
+    end
 
-    let(:interface) { Jibby::Console.new }
+    let(:interface) { Jibby::Console.new(string_io) }
+
+    let(:string_io) { StringIO.new }
     let(:username) { 'foo' }
     let(:password) { 'bar' }
 
     it 'uses interface to set credentials then encodes results' do
       expect(interface).to receive(:prompt_login)
         .and_return([username, password])
-      expect(credentials).to eql('Zm9vOmJhcg==')
+      credentials
+      auth_hash = new_gateway.instance_variable_get(:@authentication)
+      expect(auth_hash).to eql('Zm9vOmJhcg==')
+    end
+
+    it 'returns a Jibby::User object' do
+      allow(interface).to receive(:prompt_login)
+        .and_return([username, password])
+      expect(credentials.class).to eql(Jibby::User)
+    end
+
+    context 'invalid username or password' do
+      let(:username) { 'not_foo' }
+      before(:each) do
+        allow(interface).to receive(:prompt_login)
+          .and_return([username, password])
+
+        allow(new_gateway).to receive(:fetch_user).and_return(nil)
+      end
+
+      it { is_expected.to eql(nil) }
+
+      it 'displays an error and returns nil if user is not found' do
+        credentials
+        expect(string_io.string).to eql("\nInvalid username or password.\n")
+      end
     end
   end
 

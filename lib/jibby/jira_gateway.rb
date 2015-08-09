@@ -14,23 +14,40 @@ module Jibby
     def credentials(interface)
       username, password = *interface.prompt_login
 
-      return unless username && password
+      return false unless username && password
 
       @authentication = Base64.strict_encode64("#{username}:#{password}")
+      user = fetch_user(username)
+      return Jibby::User.new(data: user) if user
+      interface.output "\nInvalid username or password."
+      nil
     end
 
     def fetch_ticket(key)
       path = "#{API_PATH}/issue/#{key}"
-      req = Net::HTTP::Get.new(path)
-      req['Authorization'] = "Basic #{@authentication}" if @authentication
-      response = http_object.request(req)
 
+      response = get(path)
       return nil unless response.code.to_i == 200
 
       JSON.parse(response.body)['fields']
     end
 
     private
+
+    def fetch_user(username)
+      path = "#{API_PATH}/user?username=#{username}"
+      response = get(path)
+
+      return nil unless response.code.to_i == 200
+
+      JSON.parse(response.body)
+    end
+
+    def get(path)
+      req = Net::HTTP::Get.new(path)
+      req['Authorization'] = "Basic #{@authentication}" if @authentication
+      http_object.request(req)
+    end
 
     def http_object
       @http ||= Net::HTTP.new(@host.host, @host.port).tap do |http|
