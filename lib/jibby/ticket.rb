@@ -7,9 +7,9 @@ module Jibby
       @comments = []
       @source = data
 
-      attribute_map.each_pair do |k, v|
-        instance_variable_set("@#{k}", fetch_value(v))
-        add_attr_reader k
+      attribute_map.each_pair do |key, value|
+        instance_variable_set("@#{key}", fetch_value(value))
+        add_attr_reader key
       end
 
       add_comments
@@ -54,8 +54,8 @@ module Jibby
     end
 
     def fetch_value(path)
-      path.reduce(@source) do |a, e|
-        a.fetch(e)
+      path.reduce(@source) do |current_path, hash_key|
+        current_path.fetch(hash_key)
       end
     end
 
