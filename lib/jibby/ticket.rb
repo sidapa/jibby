@@ -2,7 +2,7 @@ module Jibby
   # Contains information about a Jira Ticket
   class Ticket
     # TODO: pass in application object instead of interface
-    def initialize(data:, interface: Jibby::Console.new)
+    def initialize(data:, interface: Jibby.interface)
       @interface = interface
       @comments = []
       @source = data
@@ -45,7 +45,7 @@ module Jibby
 
       comment_hashes.each do |comment|
         comment['jibby_index'] = @comments.size
-        @comments << Jibby::Comment.new(data: comment, interface: @interface)
+        @comments << Jibby::Comment.new(data: comment)
       end
     end
 

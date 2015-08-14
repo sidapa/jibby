@@ -53,6 +53,14 @@ describe Jibby::Ticket, :vcr do
   describe '#comments' do
     subject(:comments_method) { ticket.comments }
 
+    before(:each) do
+      Jibby.instance_variable_set(:@interface, Jibby::Console.new(string_io))
+    end
+
+    after(:each) do
+      Jibby.instance_variable_set(:@interface, Jibby::Console.new)
+    end
+
     it { is_expected.to be_nil }
 
     it 'displays comment details' do

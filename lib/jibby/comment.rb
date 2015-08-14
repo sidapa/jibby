@@ -1,7 +1,7 @@
 module Jibby
   # Contains information about a comment on a Jira Ticket
   class Comment
-    def initialize(data:, interface:)
+    def initialize(data:, interface: Jibby.interface)
       @interface = interface
       @index = data['jibby_index']
       @author = data['author']['displayName']

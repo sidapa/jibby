@@ -6,7 +6,7 @@ module Jibby
     attr_reader :gateway, :interface
     attr_accessor :current_key, :current_ticket, :current_user
 
-    def initialize(gateway:, interface: Console.new)
+    def initialize(gateway: Jibby.gateway, interface: Jibby.interface)
       @gateway = gateway
       @interface = interface
       @current_user = nil

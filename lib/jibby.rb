@@ -4,8 +4,18 @@ Dir["#{File.dirname(__FILE__)}/jibby/**/*.rb"].each { |file| require file }
 module Jibby
   module_function
 
+  attr_reader :gateway
+
+  def interface
+    @interface ||= Console.new
+  end
+
+  def application
+    @application ||= Application.new
+  end
+
   def start(host)
-    gateway = JiraGateway.new(host)
-    Application.new(gateway: gateway).start
+    @gateway = JiraGateway.new(host)
+    application.start
   end
 end
