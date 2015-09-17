@@ -2,9 +2,11 @@ Dir["#{File.dirname(__FILE__)}/jibby/**/*.rb"].each { |file| require file }
 
 # Jibby is a console client that connects to JIRA
 module Jibby
-  module_function
+  class << self
+    attr_reader :gateway
+  end
 
-  attr_reader :gateway
+  module_function
 
   def interface
     @interface ||= Console.new
